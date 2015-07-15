@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.coolweather.app.db.CoolWeatherOpenHelper;
 
@@ -85,8 +86,9 @@ public class CoolWeatherDB {
 			ContentValues values = new ContentValues();
 			values.put("city_name", city.getCityName());
 			values.put("city_code", city.getCityCode());
-			values.put("provice_id", city.getProvinceId());
+			values.put("province_id", city.getProvinceId());
 			db.insert("City", null, values);
+			
 		}
 	}
 	
@@ -95,7 +97,7 @@ public class CoolWeatherDB {
 	 */
 	public List<City> loadCities(int provinceId) {
 		List<City> list = new ArrayList<City>();
-		Cursor cursor = db.query("City", null, null, null, null, null, null);
+		Cursor cursor = db.query("City", null, "province_id = ?", new String[] {String.valueOf(provinceId)}, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				City city = new City();
@@ -130,7 +132,7 @@ public class CoolWeatherDB {
 	 */
 	public List<County> loadCounties(int cityId) {
 		List<County> list = new ArrayList<County>();
-		Cursor cursor = db.query("County", null, null, null, null, null, null);
+		Cursor cursor = db.query("County", null, "city_id = ?", new String[]{String.valueOf(cityId)}, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				County county = new County();
