@@ -193,6 +193,7 @@ public class ChooseAreaActivity extends Activity {
 				} else if ("county".equals(type)) {
 					result = Utility.handleCountiesResponse(coolWeatherDB, response, selectedCity.getId());
 				}
+				Log.d("ChooseAreaActivity", String.valueOf(result));
 				if (result) {
 					// 通过runOnUiThread()方法回到主线程处理逻辑
 					runOnUiThread(new Runnable() {
